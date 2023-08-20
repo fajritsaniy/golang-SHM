@@ -43,7 +43,7 @@ func (v *vehicleUseCase) FindById(id string) (*model.Vehicle, error) {
 func (v *vehicleUseCase) SaveData(payload *model.Vehicle) error {
 	brand, err := v.brandUseCase.FindById(payload.BrandID)
 	if err != nil {
-		return fmt.Errorf("Brand with ID %s not found!", payload.ID)
+		return fmt.Errorf("brand with ID %s not found", payload.ID)
 	}
 	payload.BrandID = brand.ID
 	return v.repo.Save(payload)

@@ -2,14 +2,15 @@ package repository
 
 import (
 	"errors"
+	"testing"
+	"time"
+
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"testing"
-	"time"
 )
 
 var brandDummies = []model.Brand{
@@ -26,6 +27,8 @@ var brandDummies = []model.Brand{
 		Name:      "BMW",
 	},
 }
+
+const dbErrorMessage = "Error on database!"
 
 type BrandRepoTestSuite struct {
 	suite.Suite
@@ -45,7 +48,7 @@ func (suite *BrandRepoTestSuite) SetupTest() {
 	assert.NoError(suite.T(), err)
 }
 
-func (suite *BrandRepoTestSuite) TestGetAllBrand_Success() {
+func (suite *BrandRepoTestSuite) TestGetAllBrandSuccess() {
 	brandRowDummies := make([]model.Brand, len(brandDummies))
 	rows := sqlmock.NewRows([]string{"id", "name", "created_at", "updated_at"})
 	for i, brand := range brandDummies {
@@ -60,20 +63,20 @@ func (suite *BrandRepoTestSuite) TestGetAllBrand_Success() {
 	assert.NoError(suite.T(), err)
 }
 
-func (suite *BrandRepoTestSuite) TestGetAllMenu_DBErrorFail() {
+func (suite *BrandRepoTestSuite) TestGetAllMenuDBErrorFail() {
 	rows := sqlmock.NewRows([]string{"id", "name", "created_at", "updated_at"})
 	for _, brand := range brandDummies {
 		rows.AddRow(brand.ID, brand.Name, brand.CreatedAt, brand.UpdatedAt)
 	}
 	expectedQuery := `SELECT \* FROM "mst_brand"`
-	suite.mock.ExpectQuery(expectedQuery).WillReturnError(errors.New("db error"))
+	suite.mock.ExpectQuery(expectedQuery).WillReturnError(errors.New(dbErrorMessage))
 	repo := NewBrandRepository(suite.DB)
 	listMenu, err := repo.List()
 	assert.Nil(suite.T(), listMenu)
 	assert.Error(suite.T(), err)
 }
 
-func (suite *BrandRepoTestSuite) TestGetById_Success() {
+func (suite *BrandRepoTestSuite) TestGetByIdSuccess() {
 	brandDm := &brandDummies[0]
 	brandRow := sqlmock.NewRows([]string{"id", "name", "created_at", "updated_at"}).
 		AddRow(brandDm.ID, brandDm.Name, brandDm.CreatedAt, brandDm.UpdatedAt)
@@ -86,20 +89,20 @@ func (suite *BrandRepoTestSuite) TestGetById_Success() {
 	assert.NoError(suite.T(), err)
 }
 
-func (suite *BrandRepoTestSuite) TestGetById_DBErrorFail() {
+func (suite *BrandRepoTestSuite) TestGetByIdDBErrorFail() {
 	brandDm := brandDummies[0]
 	brandRow := sqlmock.NewRows([]string{"id", "name", "created_at", "updated_at"})
 	brandRow.AddRow(brandDm.ID, brandDm.Name, brandDm.CreatedAt, brandDm.UpdatedAt)
 	expectedQuery := `SELECT \* FROM "mst_brand" WHERE id(\s*)=(\s*)\$1 AND "mst_brand"."deleted_at" IS NULL ORDER BY "mst_brand"."id" LIMIT 1`
 	suite.mock.ExpectQuery(expectedQuery).
-		WithArgs(brandDm.ID).WillReturnError(errors.New("db error"))
+		WithArgs(brandDm.ID).WillReturnError(errors.New(dbErrorMessage))
 	repo := NewBrandRepository(suite.DB)
 	brand, err := repo.Get(brandDm.ID)
 	assert.Nil(suite.T(), brand)
 	assert.Error(suite.T(), err)
 }
 
-func (suite *BrandRepoTestSuite) TestSearchBrand_Success() {
+func (suite *BrandRepoTestSuite) TestSearchBrandSuccess() {
 	brandRowDummies := make([]model.Brand, len(brandDummies))
 	rows := sqlmock.NewRows([]string{"id", "name", "created_at", "updated_at"})
 	for i, brand := range brandDummies {
@@ -116,13 +119,13 @@ func (suite *BrandRepoTestSuite) TestSearchBrand_Success() {
 	assert.NoError(suite.T(), err)
 }
 
-func (suite *BrandRepoTestSuite) TestSearchBrand_DBErrorFail() {
+func (suite *BrandRepoTestSuite) TestSearchBrandDBErrorFail() {
 	rows := sqlmock.NewRows([]string{"id", "name", "created_at", "updated_at"})
 	for _, brand := range brandDummies {
 		rows.AddRow(brand.ID, brand.Name, brand.CreatedAt, brand.UpdatedAt)
 	}
 	expectedQuery := `SELECT \* FROM "mst_brand" WHERE \"name\"(\s*)=(\s*)\$1 AND "mst_brand"."deleted_at" IS NULL`
-	suite.mock.ExpectQuery(expectedQuery).WillReturnError(errors.New("db error"))
+	suite.mock.ExpectQuery(expectedQuery).WillReturnError(errors.New(dbErrorMessage))
 	repo := NewBrandRepository(suite.DB)
 	filter := map[string]interface{}{"name": "Honda"}
 	listMenu, err := repo.Search(filter)
@@ -130,7 +133,7 @@ func (suite *BrandRepoTestSuite) TestSearchBrand_DBErrorFail() {
 	assert.Error(suite.T(), err)
 }
 
-func (suite *BrandRepoTestSuite) TestDeleteMenu_Success() {
+func (suite *BrandRepoTestSuite) TestDeleteMenuSuccess() {
 	suite.mock.ExpectBegin()
 	expectedQuery := `UPDATE "mst_brand"`
 	suite.mock.ExpectExec(expectedQuery).
@@ -141,16 +144,16 @@ func (suite *BrandRepoTestSuite) TestDeleteMenu_Success() {
 	assert.Nil(suite.T(), err)
 }
 
-func (suite *BrandRepoTestSuite) TestDeleteMenu_DBErrorFail() {
+func (suite *BrandRepoTestSuite) TestDeleteMenuDBErrorFail() {
 	expectedQuery := `UPDATE "mst_brand"`
 	suite.mock.ExpectExec(expectedQuery).
-		WillReturnError(errors.New("db error"))
+		WillReturnError(errors.New(dbErrorMessage))
 	repo := NewBrandRepository(suite.DB)
 	err := repo.Delete("1")
 	assert.Error(suite.T(), err)
 }
 
-func (suite *BrandRepoTestSuite) TestCountByName_Success() {
+func (suite *BrandRepoTestSuite) TestCountByNameSuccess() {
 	brandDm := brandDummies[0]
 	filter := map[string]interface{}{"name": "Honda"}
 	brandRow := sqlmock.NewRows([]string{"id", "name", "created_at", "updated_at"}).
@@ -164,14 +167,14 @@ func (suite *BrandRepoTestSuite) TestCountByName_Success() {
 	assert.NoError(suite.T(), err)
 }
 
-func (suite *BrandRepoTestSuite) TestCountByName_DBErrorFail() {
+func (suite *BrandRepoTestSuite) TestCountByNameDBErrorFail() {
 	brandDm := brandDummies[0]
 	filter := map[string]interface{}{"name": "Honda"}
 	brandRow := sqlmock.NewRows([]string{"id", "name", "created_at", "updated_at"})
 	brandRow.AddRow(brandDm.ID, brandDm.Name, brandDm.CreatedAt, brandDm.UpdatedAt)
 	expectedQuery := `SELECT \* FROM "mst_brand" WHERE name(\s*)=(\s*)\$1 AND "mst_brand"."deleted_at" IS NULL`
 	suite.mock.ExpectQuery(expectedQuery).
-		WithArgs(brandDm.ID).WillReturnError(errors.New("db error"))
+		WithArgs(brandDm.ID).WillReturnError(errors.New(dbErrorMessage))
 	repo := NewBrandRepository(suite.DB)
 	brand, err := repo.Search(filter)
 	assert.Nil(suite.T(), brand)

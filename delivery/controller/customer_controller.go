@@ -1,36 +1,23 @@
 package controller
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/delivery/api"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/delivery/middleware"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/usecase"
-	"net/http"
 )
 
 type CustomerController struct {
-	router         *gin.Engine
-	usecase        usecase.CustomerUseCase
-	authMiddleware middleware.AuthTokenMiddleware
+	router  *gin.Engine
+	usecase usecase.CustomerUseCase
 	api.BaseApi
 }
 
-func (cc *CustomerController) createHandler(c *gin.Context) {
-	var payload model.Customer
-	if err := c.ShouldBindJSON(&payload); err != nil {
-		cc.NewErrorErrorResponse(c, http.StatusBadRequest, err.Error())
-		return
-	}
-	if err := cc.usecase.SaveData(&payload); err != nil {
-		cc.NewErrorErrorResponse(c, http.StatusInternalServerError, err.Error())
-		return
-	}
-	cc.NewSuccessSingleResponse(c, payload, "OK")
-}
-
-func (cc *CustomerController) updateHandler(c *gin.Context) {
+func (cc *CustomerController) createUpdateHandler(c *gin.Context) {
 	var payload model.Customer
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		cc.NewErrorErrorResponse(c, http.StatusBadRequest, err.Error())
@@ -82,10 +69,12 @@ func NewCustomerController(r *gin.Engine, usecase usecase.CustomerUseCase, authM
 		router:  r,
 		usecase: usecase,
 	}
-	r.GET("/customers", authMiddleware.RequireToken(), controller.listHandler)
+
+	const customerEndpoint = "/customers"
+	r.GET(customerEndpoint, authMiddleware.RequireToken(), controller.listHandler)
 	r.GET("/customers/:id", authMiddleware.RequireToken(), controller.getByIDHandler)
-	r.POST("/customers", authMiddleware.RequireToken(), controller.createHandler)
-	r.PUT("/customers", authMiddleware.RequireToken(), controller.updateHandler)
+	r.POST(customerEndpoint, authMiddleware.RequireToken(), controller.createUpdateHandler)
+	r.PUT(customerEndpoint, authMiddleware.RequireToken(), controller.createUpdateHandler)
 	r.DELETE("/customers/:id", authMiddleware.RequireToken(), controller.deleteHandler)
 	return &controller
 }

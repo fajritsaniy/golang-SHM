@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"fmt"
+
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/repository"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/utils"
@@ -17,10 +18,14 @@ type customerUseCase struct {
 	repo repository.CustomerRepository
 }
 
+func CustomerNotFoundMessage(id string) string {
+	return fmt.Sprintf("customers with ID %s not found", id)
+}
+
 func (c *customerUseCase) DeleteData(id string) error {
 	customer, err := c.FindById(id)
 	if err != nil {
-		return fmt.Errorf("Customer with ID %s not found!", id)
+		return fmt.Errorf(CustomerNotFoundMessage(id))
 	}
 	return c.repo.Delete(customer.ID)
 }
@@ -32,7 +37,7 @@ func (c *customerUseCase) FindAll() ([]model.Customer, error) {
 func (c *customerUseCase) FindById(id string) (*model.Customer, error) {
 	customer, err := c.repo.Get(id)
 	if err != nil {
-		return nil, fmt.Errorf("Customer with ID %s not found!", id)
+		return nil, fmt.Errorf(CustomerNotFoundMessage(id))
 	}
 	return customer, nil
 }
@@ -41,7 +46,7 @@ func (c *customerUseCase) SaveData(payload *model.Customer) error {
 	if payload.ID != "" {
 		_, err := c.FindById(payload.ID)
 		if err != nil {
-			return fmt.Errorf("Customer with ID %s not found!", payload.ID)
+			return fmt.Errorf(CustomerNotFoundMessage(payload.ID))
 		}
 	}
 
@@ -62,7 +67,7 @@ func (c *customerUseCase) SaveData(payload *model.Customer) error {
 func (c *customerUseCase) SearchBy(by map[string]interface{}) ([]model.Customer, error) {
 	customers, err := c.repo.Search(by)
 	if err != nil {
-		return nil, fmt.Errorf("Data not found")
+		return nil, fmt.Errorf("data not found")
 	}
 	return customers, nil
 }
@@ -70,7 +75,7 @@ func (c *customerUseCase) SearchBy(by map[string]interface{}) ([]model.Customer,
 func (c *customerUseCase) FindByEmail(email string) (*model.Customer, error) {
 	customer, err := c.repo.GetByEmail(email)
 	if err != nil {
-		return nil, fmt.Errorf("Customer with email %s not found!", email)
+		return nil, fmt.Errorf("customer with email %s not found", email)
 	}
 	return customer, nil
 }
@@ -78,7 +83,7 @@ func (c *customerUseCase) FindByEmail(email string) (*model.Customer, error) {
 func (c *customerUseCase) FindByPhone(phone string) (*model.Customer, error) {
 	customer, err := c.repo.GetByPhone(phone)
 	if err != nil {
-		return nil, fmt.Errorf("Customer with phone number %s not found!", phone)
+		return nil, fmt.Errorf("customer with phone number %s not found", phone)
 	}
 	return customer, nil
 }

@@ -1,19 +1,19 @@
 package controller
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/delivery/api"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/delivery/middleware"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/usecase"
-	"net/http"
 )
 
 type TransactionController struct {
-	router         *gin.Engine
-	usecase        usecase.TransactionUseCase
-	authMiddleware middleware.AuthTokenMiddleware
+	router  *gin.Engine
+	usecase usecase.TransactionUseCase
 	api.BaseApi
 }
 

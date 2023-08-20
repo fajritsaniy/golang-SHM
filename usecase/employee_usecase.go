@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"fmt"
+
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/utils"
 
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
@@ -18,10 +19,14 @@ type employeeUseCase struct {
 	repo repository.EmployeeRepository
 }
 
+func employeeIDNotFoundMessage(id string) string {
+	return fmt.Sprintf("employee with ID %s not found", id)
+}
+
 func (e *employeeUseCase) DeleteData(id string) error {
 	employee, err := e.FindById(id)
 	if err != nil {
-		return fmt.Errorf("Employee with ID %s not found!", id)
+		return fmt.Errorf(employeeIDNotFoundMessage(id))
 	}
 	return e.repo.Delete(employee.ID)
 }
@@ -33,7 +38,7 @@ func (e *employeeUseCase) FindAll() ([]model.Employee, error) {
 func (e *employeeUseCase) FindById(id string) (*model.Employee, error) {
 	employee, err := e.repo.Get(id)
 	if err != nil {
-		return nil, fmt.Errorf("Employee with ID %s not found!", id)
+		return nil, fmt.Errorf(employeeIDNotFoundMessage(id))
 	}
 	return employee, nil
 }
@@ -42,18 +47,18 @@ func (e *employeeUseCase) SaveData(payload *model.Employee) error {
 	if payload.ID != "" {
 		_, err := e.FindById(payload.ID)
 		if err != nil {
-			return fmt.Errorf("Employee with ID %s not found!", payload.ID)
+			return fmt.Errorf(employeeIDNotFoundMessage(payload.ID))
 		}
 	}
 
 	isEmailExist, _ := e.FindByEmail(payload.Email)
 	if isEmailExist != nil && isEmailExist.Email == payload.Email {
-		return fmt.Errorf("Employee with email: %v exists", payload.Email)
+		return fmt.Errorf("employee with email: %v exists", payload.Email)
 	}
 
 	isPhoneNumberExist, _ := e.FindByPhone(payload.PhoneNumber)
 	if isPhoneNumberExist != nil && isPhoneNumberExist.PhoneNumber == payload.PhoneNumber {
-		return fmt.Errorf("Employee with phone number: %v exists", payload.PhoneNumber)
+		return fmt.Errorf("employee with phone number: %v exists", payload.PhoneNumber)
 	}
 
 	if payload.ManagerID != nil {
@@ -78,7 +83,7 @@ func (e *employeeUseCase) SaveData(payload *model.Employee) error {
 func (e *employeeUseCase) SearchBy(by map[string]interface{}) ([]model.Employee, error) {
 	employees, err := e.repo.Search(by)
 	if err != nil {
-		return nil, fmt.Errorf("Data not found")
+		return nil, fmt.Errorf("data not found")
 	}
 	return employees, nil
 }
@@ -86,7 +91,7 @@ func (e *employeeUseCase) SearchBy(by map[string]interface{}) ([]model.Employee,
 func (e *employeeUseCase) FindByEmail(email string) (*model.Employee, error) {
 	employee, err := e.repo.GetByEmail(email)
 	if err != nil {
-		return nil, fmt.Errorf("Employee with email %s not found!", email)
+		return nil, fmt.Errorf("employee with email %s not found", email)
 	}
 	return employee, nil
 }
@@ -94,7 +99,7 @@ func (e *employeeUseCase) FindByEmail(email string) (*model.Employee, error) {
 func (e *employeeUseCase) FindByPhone(phone string) (*model.Employee, error) {
 	employee, err := e.repo.GetByPhone(phone)
 	if err != nil {
-		return nil, fmt.Errorf("Employee with phone number %s not found!", phone)
+		return nil, fmt.Errorf("employee with phone number %s not found", phone)
 	}
 	return employee, nil
 }

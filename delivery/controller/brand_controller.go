@@ -1,13 +1,14 @@
 package controller
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/delivery/api"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/delivery/middleware"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/usecase"
-	"net/http"
 )
 
 type BrandController struct {
@@ -17,20 +18,7 @@ type BrandController struct {
 	api.BaseApi
 }
 
-func (b *BrandController) createHandler(c *gin.Context) {
-	var payload model.Brand
-	if err := c.ShouldBindJSON(&payload); err != nil {
-		b.NewErrorErrorResponse(c, http.StatusBadRequest, err.Error())
-		return
-	}
-	if err := b.usecase.SaveData(&payload); err != nil {
-		b.NewErrorErrorResponse(c, http.StatusInternalServerError, err.Error())
-		return
-	}
-	b.NewSuccessSingleResponse(c, payload, "OK")
-}
-
-func (b *BrandController) updateHandler(c *gin.Context) {
+func (b *BrandController) createUpdateHandler(c *gin.Context) {
 	var payload model.Brand
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		b.NewErrorErrorResponse(c, http.StatusBadRequest, err.Error())
@@ -83,10 +71,12 @@ func NewBrandController(r *gin.Engine, usecase usecase.BrandUseCase, authMiddlew
 		usecase:        usecase,
 		authMiddleware: authMiddleware,
 	}
-	r.GET("/brands", controller.listHandler)
+
+	const brandsEndpoint = "/brands"
+	r.GET(brandsEndpoint, controller.listHandler)
 	r.GET("/brands/:id", controller.getByIDHandler)
-	r.POST("/brands", authMiddleware.RequireToken(), controller.createHandler)
-	r.PUT("/brands", authMiddleware.RequireToken(), controller.updateHandler)
+	r.POST(brandsEndpoint, authMiddleware.RequireToken(), controller.createUpdateHandler)
+	r.PUT(brandsEndpoint, authMiddleware.RequireToken(), controller.createUpdateHandler)
 	r.DELETE("/brands/:id", authMiddleware.RequireToken(), controller.deleteHandler)
 	return &controller
 }

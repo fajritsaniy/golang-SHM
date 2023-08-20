@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"fmt"
+
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
 
 	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
@@ -18,10 +19,14 @@ type brandUseCase struct {
 	repo repository.BrandRepository
 }
 
+func BrandNotFoundMessage(id string) string {
+	return fmt.Sprintf("brand with ID %s not found", id)
+}
+
 func (b *brandUseCase) DeleteData(id string) error {
 	brand, err := b.FindById(id)
 	if err != nil {
-		return fmt.Errorf("Brand with ID %s not found!", id)
+		return fmt.Errorf(BrandNotFoundMessage(id))
 	}
 	return b.repo.Delete(brand.ID)
 }
@@ -33,7 +38,7 @@ func (b *brandUseCase) FindAll() ([]model.Brand, error) {
 func (b *brandUseCase) FindById(id string) (*model.Brand, error) {
 	brand, err := b.repo.Get(id)
 	if err != nil {
-		return nil, fmt.Errorf("Brand with ID %s not found!", id)
+		return nil, fmt.Errorf(BrandNotFoundMessage(id))
 	}
 	return brand, nil
 }
@@ -53,7 +58,7 @@ func (b *brandUseCase) SaveData(payload *model.Brand) error {
 		fmt.Println("here")
 		_, err := b.FindById(payload.ID)
 		if err != nil {
-			return fmt.Errorf("brand with ID %s not found", payload.ID)
+			return fmt.Errorf(BrandNotFoundMessage(payload.ID))
 		}
 	}
 	return b.repo.Save(payload)
