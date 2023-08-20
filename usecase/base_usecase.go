@@ -1,6 +1,6 @@
 package usecase
 
-import "github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
+import "github.com/fajritsaniy/golang-SHM/model/dto"
 
 type BaseUseCase[T any] interface {
 	SearchBy(by map[string]interface{}) ([]T, error)

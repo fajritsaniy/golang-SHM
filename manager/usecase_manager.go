@@ -1,7 +1,7 @@
 package manager
 
 import (
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/usecase"
+	"github.com/fajritsaniy/golang-SHM/usecase"
 )
 
 type UseCaseManager interface {

@@ -4,8 +4,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
+	"github.com/fajritsaniy/golang-SHM/model"
+	"github.com/fajritsaniy/golang-SHM/model/dto"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"

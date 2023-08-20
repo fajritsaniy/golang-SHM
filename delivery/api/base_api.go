@@ -1,9 +1,9 @@
 package api
 
 import (
+	"github.com/fajritsaniy/golang-SHM/delivery/api/response"
+	"github.com/fajritsaniy/golang-SHM/model/dto"
 	"github.com/gin-gonic/gin"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/delivery/api/response"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
 	"github.com/mitchellh/mapstructure"
 )
 

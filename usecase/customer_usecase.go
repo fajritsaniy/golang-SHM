@@ -3,9 +3,9 @@ package usecase
 import (
 	"fmt"
 
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/repository"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/utils"
+	"github.com/fajritsaniy/golang-SHM/model"
+	"github.com/fajritsaniy/golang-SHM/repository"
+	"github.com/fajritsaniy/golang-SHM/utils"
 )
 
 type CustomerUseCase interface {

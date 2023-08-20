@@ -3,7 +3,7 @@ package usecase
 import (
 	"mime/multipart"
 
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/repository"
+	"github.com/fajritsaniy/golang-SHM/repository"
 )
 
 type FileUseCase interface {

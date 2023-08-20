@@ -1,6 +1,6 @@
 package manager
 
-import "github.com/jutionck/golang-db-sinar-harapan-makmur-orm/repository"
+import "github.com/fajritsaniy/golang-SHM/repository"
 
 type RepositoryManager interface {
 	// kumpulan repo disini

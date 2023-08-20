@@ -3,10 +3,10 @@ package usecase
 import (
 	"fmt"
 
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
+	"github.com/fajritsaniy/golang-SHM/model/dto"
 
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/repository"
+	"github.com/fajritsaniy/golang-SHM/model"
+	"github.com/fajritsaniy/golang-SHM/repository"
 )
 
 type BrandUseCase interface {

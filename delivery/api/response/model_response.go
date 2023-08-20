@@ -1,6 +1,6 @@
 package response
 
-import "github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
+import "github.com/fajritsaniy/golang-SHM/model/dto"
 
 type Status struct {
 	Code        int    `json:"code"`

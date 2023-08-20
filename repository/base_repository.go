@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
+	"github.com/fajritsaniy/golang-SHM/model/dto"
 )
 
 type BaseRepository[T any] interface {

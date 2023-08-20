@@ -3,7 +3,7 @@ package repository
 import (
 	"errors"
 
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
+	"github.com/fajritsaniy/golang-SHM/model"
 	"gorm.io/gorm"
 )
 

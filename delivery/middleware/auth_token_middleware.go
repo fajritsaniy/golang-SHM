@@ -2,9 +2,10 @@ package middleware
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/utils/security"
 	"strings"
+
+	"github.com/fajritsaniy/golang-SHM/utils/security"
+	"github.com/gin-gonic/gin"
 )
 
 type authHeader struct {

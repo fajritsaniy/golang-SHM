@@ -3,7 +3,7 @@ package repository
 import (
 	"fmt"
 
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
+	"github.com/fajritsaniy/golang-SHM/model"
 	"gorm.io/gorm"
 )
 

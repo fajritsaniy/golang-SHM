@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/fajritsaniy/golang-SHM/model/dto"
 	"github.com/gin-gonic/gin"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
 )
 
 func ValidateRequestQueryParams(c *gin.Context) (dto.RequestQueryParams, error) {

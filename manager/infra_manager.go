@@ -3,8 +3,8 @@ package manager
 import (
 	"fmt"
 
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/config"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
+	"github.com/fajritsaniy/golang-SHM/config"
+	"github.com/fajritsaniy/golang-SHM/model"
 	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

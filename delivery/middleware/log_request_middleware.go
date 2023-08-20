@@ -4,9 +4,9 @@ import (
 	"os"
 	"time"
 
+	"github.com/fajritsaniy/golang-SHM/config"
+	"github.com/fajritsaniy/golang-SHM/model"
 	"github.com/gin-gonic/gin"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/config"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
 	"github.com/sirupsen/logrus"
 )
 

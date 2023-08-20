@@ -6,13 +6,13 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/delivery/middleware"
+	"github.com/fajritsaniy/golang-SHM/delivery/middleware"
 
+	"github.com/fajritsaniy/golang-SHM/delivery/api"
+	"github.com/fajritsaniy/golang-SHM/model"
+	"github.com/fajritsaniy/golang-SHM/usecase"
+	"github.com/fajritsaniy/golang-SHM/utils/common"
 	"github.com/gin-gonic/gin"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/delivery/api"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/usecase"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/utils/common"
 )
 
 type VehicleController struct {

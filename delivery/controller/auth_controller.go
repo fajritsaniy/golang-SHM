@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/fajritsaniy/golang-SHM/model"
+	"github.com/fajritsaniy/golang-SHM/usecase"
 	"github.com/gin-gonic/gin"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/usecase"
 )
 
 type AuthController struct {

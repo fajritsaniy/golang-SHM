@@ -3,8 +3,8 @@ package response
 import (
 	"net/http"
 
+	"github.com/fajritsaniy/golang-SHM/model/dto"
 	"github.com/gin-gonic/gin"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
 )
 
 func SendSingleResponse(c *gin.Context, data interface{}, responseType string) {

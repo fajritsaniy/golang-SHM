@@ -2,9 +2,10 @@ package repository
 
 import (
 	"fmt"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/utils/common"
+
+	"github.com/fajritsaniy/golang-SHM/model"
+	"github.com/fajritsaniy/golang-SHM/model/dto"
+	"github.com/fajritsaniy/golang-SHM/utils/common"
 	"gorm.io/gorm"
 )
 

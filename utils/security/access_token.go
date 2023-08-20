@@ -2,11 +2,12 @@ package security
 
 import (
 	"fmt"
-	"github.com/golang-jwt/jwt"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/config"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
 	"log"
 	"time"
+
+	"github.com/fajritsaniy/golang-SHM/config"
+	"github.com/fajritsaniy/golang-SHM/model"
+	"github.com/golang-jwt/jwt"
 )
 
 type AccessToken interface {

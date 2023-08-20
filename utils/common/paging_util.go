@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model/dto"
+	"github.com/fajritsaniy/golang-SHM/model/dto"
 )
 
 func GetPaginationParams(params dto.PaginationParam) dto.PaginationQuery {

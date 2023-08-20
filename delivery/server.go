@@ -2,13 +2,14 @@ package delivery
 
 import (
 	"fmt"
+
+	"github.com/fajritsaniy/golang-SHM/config"
+	"github.com/fajritsaniy/golang-SHM/delivery/controller"
+	"github.com/fajritsaniy/golang-SHM/delivery/middleware"
+	"github.com/fajritsaniy/golang-SHM/manager"
+	"github.com/fajritsaniy/golang-SHM/usecase"
+	"github.com/fajritsaniy/golang-SHM/utils/security"
 	"github.com/gin-gonic/gin"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/config"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/delivery/controller"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/delivery/middleware"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/manager"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/usecase"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/utils/security"
 	"github.com/sirupsen/logrus"
 )
 

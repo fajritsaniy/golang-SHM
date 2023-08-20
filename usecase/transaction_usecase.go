@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/repository"
+	"github.com/fajritsaniy/golang-SHM/model"
+	"github.com/fajritsaniy/golang-SHM/repository"
 )
 
 type TransactionUseCase interface {

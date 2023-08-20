@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/jutionck/golang-db-sinar-harapan-makmur-orm/model"
+	"github.com/fajritsaniy/golang-SHM/model"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
