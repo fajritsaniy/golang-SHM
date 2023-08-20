@@ -2,3 +2,4 @@
 /.env
 /LOG_REQUEST.txt
 /uploads/
+/pg_data/
